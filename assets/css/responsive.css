@@ -1,0 +1,119 @@
+/*---------------------------------------------------
+	responsive style
+----------------------------------------------------*/
+@media all and (min-width: 700px) {
+	.search-popup .search-form {
+		min-width: 550px;
+	}
+}
+@media all and (max-width: 440px) {
+	.ba-navbar {
+		width: 325px;
+	}
+	.search-popup .search-form .form-group .form-control {
+	    border: none;
+	    border-top-right-radius: 6px;
+	    border-bottom-right-radius: 6px;
+	    height: 54px;
+	    padding: 0 70px 0 12px;
+	    font-size: 14px;
+	}
+	.qr-button {
+	    display:none;
+	}
+}
+@media all and (max-width: 360px) {
+	.ba-navbar {
+		width: 280px;
+	}
+	.ba-balance-inner {
+	    margin: 0 30px;
+	}
+	.ba-add-balance-inner .btn {
+	    padding: 0 14px;
+	    font-size: 13px;
+	}
+	.ba-add-balance-inner .btn i {
+	    padding-left: 4px;
+	}
+	.single-goal .details {
+	    padding: 20px 15px;
+	}
+	.single-goal .circle-inner {
+	    padding: 20px 10px;
+	}
+	.single-goal.single-goal-one .goal-amount,
+	.single-goal .details h6 {
+	    font-size: 15px;
+	}
+	.ba-single-history {
+		padding: 15px;
+	}
+	.ba-single-history h6 {
+		font-size: 15px;
+	}
+	.ba-single-history h5 {
+		font-size: 16px;
+	}
+	.ba-single-transaction {
+	    padding: 12px;
+	}
+	.ba-single-transaction .thumb {
+	    margin-right: 8px;
+	}
+	.ba-single-transaction p {
+	    font-size: 11px;
+	}
+	.ba-single-transaction h5 {
+	    font-size: 15px;
+	}
+	.ba-single-transaction .amount {
+	    right: 10px;
+	    font-size: 13px;
+	}
+	.single-blog .details {
+	    padding: 15px;
+	}
+	.ba-navbar-user .details h5 {
+		font-size: 16px;
+		margin-bottom: 2px;
+	}
+	.ba-navbar-user .details p {
+		font-size: 13px;
+	}
+	.ba-navbar .ba-add-balance-title {
+	    padding: 16px 15px 15px 15px;
+	}
+	.ba-navbar .ba-add-balance-title h5 {
+	    font-size: 16px;
+	}
+	.ba-add-balance-title p {
+	    padding-top: 0;
+	    font-size: 13px;
+	}
+	.ba-single-transaction.style-two .amount {
+	    width: 64px;
+	}
+	.transaction-details-inner li {
+	    list-style: none;
+	    display: block;
+	    overflow: hidden;
+	    border-bottom: 1px solid #ececec;
+	    background: #fff;
+	    padding: 20px 15px;
+	    font-size: 14px;
+	    font-weight: 500;
+	}
+	.section-title .title {
+	    font-size: 22px;
+	}
+	.section-title a {
+	    padding-top: 3px;
+	}
+	.verification-inner h3 {
+	    font-size: 22px;
+	}
+	.qr-button {
+	    display:none;
+	}
+}
