@@ -30,23 +30,28 @@
     <div class="signin-area mt-5">
         <div class="container">
         <h3 class="text-center p-3 bg-white rounded shadow text-primary" >Create An Account</h3>
-            <form class="contact-form-inner">
+            <form data-form="register"  method="POST" action="<?=APP_PATH?>api/process.php" class="contact-form-inner cashout_form">
+
+                <div class="messageBox  text-center">
+                
+                </div>
+
                 <label class="single-input-wrap">
                     <span>User name*</span>
-                    <input type="text">
+                    <input type="text" required name="username" maxlength="20">
                 </label>
                 <label class="single-input-wrap">
                     <span>Email Address*</span>
-                    <input type="text">
+                    <input type="email"  required name="email" maxlength="100">
                 </label>
                 <label class="single-input-wrap">
                     <span>Password*</span>
-                    <input type="password">
+                    <input type="password"  required name="password" minlength="6"  maxlength="10">
                 </label>
                 <div class="single-checkbox-wrap">
-                    <input checked required type="checkbox"><span>Accept <a class="text-primary" href="<?=APP_PATH?>terms.php">Terms & Condition</a></span>
+                    <input checked required name="terms" type="checkbox"><span>Accept <a class="text-primary" href="<?=APP_PATH?>terms.php">Terms & Condition</a></span>
                 </div>
-                <a class="btn btn-purple" href="#">Register</a>
+                <button class="btn btn-purple" name="register" value="Register" type="submit">Register</button>
             </form>
         </div>
     </div>
@@ -58,8 +63,8 @@
 
 
     <!-- All Js File here -->
-    <script src="assets/js/vendor.js"></script>
-    <script src="assets/js/main.js"></script>
+    <?php require_once "../includes/js.php"; ?>
+
 
 </body>
 

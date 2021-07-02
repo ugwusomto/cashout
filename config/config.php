@@ -1,4 +1,5 @@
 <?php 
+session_start();
 define('APP_NAME', 'cashout');
 define("APP_PATH","http://localhost/cashout/");
 define("JS_PATH","http://localhost/cashout/assets/js/");
