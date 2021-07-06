@@ -18,9 +18,14 @@
     <!-- page-title stary -->
     <div class="page-title mg-top-50">
         <div class="container">
+           <?php if(empty($_SESSION["customer_id"])){ ?>
             <a class="float-right ml-3 p-2" href="<?=APP_PATH?>auth/register.php">Register</a>
             <a class="float-right ml-3 p-2" href="<?=APP_PATH?>auth/login.php">Login</a>
+           <?php }else{ ?>
             <a class="float-right ml-3 p-2" href="<?=APP_PATH?>customer/home.php">Dashboard</a>
+            <a class="float-right ml-3 p-2 text-danger" href="<?=APP_PATH?>auth/logout.php">Logout</a>
+
+           <?php } ?>
         </div>
     </div>
     <!-- page-title end -->

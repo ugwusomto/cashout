@@ -1,4 +1,22 @@
-<?php require_once "../config/config.php" ?>
+<?php 
+
+require_once "../config/config.php";
+require_once "../config/Db.php";
+require_once "../controllers/Helper.php";
+require_once "../controllers/Account.php";
+
+
+ 
+ if(empty($_SESSION['customer_id'])){
+     $path = APP_PATH."auth/login.php";
+     header("Location: $path");
+     exit();
+ }
+
+ $account =(object) Account::getData();
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +40,9 @@
         <!-- page-title stary -->
         <div class="page-title mg-top-50">
         <div class="container">
-            <a class="float-right ml-3 p-2" href="<?=APP_PATH?>auth/register.php">Welcome Back Jude</a>
+            <a class="float-right ml-3 p-2" href="<?=APP_PATH?>auth/register.php">Welcome Back <?=ucwords($_SESSION['customer_username'])?></a>
 
-            <a class="float-right ml-3  p-2 text-danger"  href="<?=APP_PATH?>auth/register.php">Logout</a>
+            <a class="float-right ml-3  p-2 text-danger"  href="<?=APP_PATH?>auth/logout.php">Logout</a>
 
         </div>
     </div>
@@ -88,7 +106,7 @@
                         <img src="<?=IMAGE_PATH?>icon/1.png" alt="img">
                     </div>
                     <h5 class="title">Total Balance</h5>
-                    <h5 class="amount">$56,985.00</h5>
+                    <h5 class="amount">$<?=number_format($account->balance,0,".",",")?></h5>
                 </div>
             </div>
         </div>

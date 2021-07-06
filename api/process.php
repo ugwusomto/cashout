@@ -3,6 +3,8 @@ require_once "../config/config.php";
 require_once "../config/Db.php";
 require_once "../controllers/Helper.php";
 require_once "../controllers/User.php";
+require_once "../controllers/Account.php";
+
 
 
 
@@ -52,8 +54,14 @@ if(!empty($_POST["register"])){
   }
 
   if(empty($message["errors"])){
-    $message["success"] = "Everything is successfull";
-    echo json_encode($message);
+    $result = User::register($formData);
+    if(is_array($result) && !empty($result['id'])){
+     Account::create($result['id']);
+
+    }
+    $message = ($result == true) ? ["success"=>"Your registeration was successfull"] : ["errors"=>["failed"=>"Something went wrong , Please try again"]];
+    $message["url"] = APP_PATH."auth/login.php";
+    echo json_encode($message); 
   }else{
     echo json_encode($message);
   }
@@ -61,3 +69,44 @@ if(!empty($_POST["register"])){
 
 }
 
+
+//condition for user login
+if(!empty($_POST['login'])){
+
+    $message = [];
+  $formData = [];
+  extract($_POST);
+
+
+  //process email
+  if (!empty($email)) {
+    $formData["email"] = Helper::sanitize($email, "lower");
+  } else {
+      $message["errors"]["email"] = "Please enter email";
+  }
+
+  // check for password
+  if (!empty($password)) {
+    $formData["password"] = Helper::encrypt($password);
+  } else {
+      $message["errors"]["password"] = "Please enter password";
+  }
+
+  if (empty($message["errors"])) {
+      $result = User::login($formData);
+    
+      if(!empty($result)){
+        User::setSession($result);
+        if(!empty($rem)){
+          User::setCookie($result);
+        }
+        $message =  ["success"=>"Login  successfull","url"=>APP_PATH."customer/home.php"];
+      }else{
+        $message = ["errors"=>["failed"=>"Invalid Login Details"]];
+      }
+      echo json_encode($message);
+  } else {
+      echo json_encode($message);
+  }
+
+}

@@ -22,8 +22,6 @@ function handleFormSubmission(event){
   let formData = form.serializeArray();
   formData.push({name:formType,value:true})
   
-
-
   //ajax Call
   $.ajax({
     method:method,
@@ -36,9 +34,27 @@ function handleFormSubmission(event){
         for (const key in response.errors) {
           messageBox.append($("<p>").text(response.errors[key]).addClass("text-light")) ;
         }
-        messageBox.addClass("alert alert-danger");
+        messageBox
+					.removeClass("alert alert-success")
+					.addClass("alert alert-danger");
       }else if(response.success){
-        messageBox.append($("<p>").text(response.success).addClass("text-light")).addClass("alert alert-success");
+        messageBox
+					.append(
+						$("<p>")
+							.text(response.success)
+							.addClass("text-light")
+					)
+					.removeClass("alert alert-danger")
+					.addClass("alert alert-success");
+   
+          // redirect to a url if it exists
+          if(response.url){
+              setTimeout(() => {
+             location.href = response.url;
+          }, 2000);
+          }
+
+
       }
     }
   })

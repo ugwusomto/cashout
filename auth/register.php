@@ -1,5 +1,13 @@
 <?php 
  require_once "../config/config.php";
+
+   if (!empty($_SESSION['customer_id'])) {
+      $path = APP_PATH."customer/home.php";
+      header("Location: $path");
+      exit();
+  }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +76,4 @@
 
 </body>
 
-
-<!-- Mirrored from www.s7template.com/tf/bankapp/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Jun 2021 08:22:33 GMT -->
 </html>

@@ -1,5 +1,11 @@
 <?php 
  require_once "../config/config.php";
+  if (!empty($_SESSION['customer_id'])) {
+     $path = APP_PATH."customer/home.php";
+     header("Location: $path");
+     exit();
+ }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,20 +36,21 @@
     <div class="signin-area mt-5">
         <div class="container">
         <h3 class="text-center p-3 bg-white rounded shadow text-primary" >Login Here</h3>
-            <form class="contact-form-inner">
+            <form data-form="login"  method="POST" action="<?=APP_PATH?>api/process.php" class="contact-form-inner cashout_form">
+                <div class="messageBox  text-center"></div>
 
                 <label class="single-input-wrap">
                     <span>Email Address*</span>
-                    <input type="text">
+                    <input required type="email" maxlength="100" name="email" placeholder="email" >
                 </label>
                 <label class="single-input-wrap">
                     <span>Password*</span>
-                    <input type="password">
+                      <input required type="password"  required name="password" minlength="6"  maxlength="10">
                 </label>
                 <div class="single-checkbox-wrap">
-                    <input checked required type="checkbox"><span>Remember Me</span>
+                    <input name="rem" checked required type="checkbox"><span>Remember Me</span>
                 </div>
-                <a class="btn btn-purple" href="#">Login</a>
+                <button class="btn btn-purple" name="login_user" type="submit">Login</button>
             </form>
         </div>
     </div>
@@ -55,11 +62,11 @@
 
 
     <!-- All Js File here -->
-    <script src="assets/js/vendor.js"></script>
-    <script src="assets/js/main.js"></script>
+    <?php require_once "../includes/js.php"; ?>
+
 
 </body>
 
 
-<!-- Mirrored from www.s7template.com/tf/bankapp/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Jun 2021 08:22:33 GMT -->
+
 </html>
