@@ -83,7 +83,7 @@ class Account extends Db
         return json_decode($result);
 
       }catch(Exception $e){
-         return ["status"=>false];
+         return ["status"=>false,"message"=>"Something went wrong please try again"];
       }
 
     }
