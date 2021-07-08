@@ -41,7 +41,6 @@
             <form data-form="register"  method="POST" action="<?=APP_PATH?>api/process.php" class="contact-form-inner cashout_form">
 
                 <div class="messageBox  text-center">
-                
                 </div>
 
                 <label class="single-input-wrap">
@@ -59,7 +58,7 @@
                 <div class="single-checkbox-wrap">
                     <input checked required name="terms" type="checkbox"><span>Accept <a class="text-primary" href="<?=APP_PATH?>terms.php">Terms & Condition</a></span>
                 </div>
-                <button class="btn btn-purple" name="register" value="Register" type="submit">Register</button>
+                <button data-name="Register" data-process="Processing..." class="btn btn-purple" name="register" value="Register" type="submit">Register</button>
             </form>
         </div>
     </div>

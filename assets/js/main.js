@@ -24,7 +24,9 @@
         ------------------------------------------------- */
         if ($('.ba-add-balance-btn').length) {
             $(".ba-add-balance-btn").on('click', function() {
-                $(".add-balance-inner-wrap").toggleClass("add-balance-inner-wrap-show", "linear");
+                let formType = $(this).data("form");
+                // add - balance - inner - wrap;
+                $(`.${formType}`).toggleClass("add-balance-inner-wrap-show", "linear");
             });
             $('body').on('click', function(event) {
                 if (!$(event.target).closest('.ba-add-balance-btn').length && !$(event.target).closest('.add-balance-inner-wrap').length) {

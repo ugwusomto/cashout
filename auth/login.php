@@ -1,10 +1,27 @@
 <?php 
  require_once "../config/config.php";
+ require_once "../config/Db.php";
+ require_once "../controllers/User.php";
+
+
+
+
+  $userData = [];
+ //check for existernce of our cookie
+ if (!empty($_COOKIE["userdata"])) {
+     $userData = (array) json_decode($_COOKIE["userdata"]);
+     User::setSession($userData);
+ }
+
+
+
   if (!empty($_SESSION['customer_id'])) {
      $path = APP_PATH."customer/home.php";
      header("Location: $path");
      exit();
  }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +67,7 @@
                 <div class="single-checkbox-wrap">
                     <input name="rem" checked required type="checkbox"><span>Remember Me</span>
                 </div>
-                <button class="btn btn-purple" name="login_user" type="submit">Login</button>
+                <button data-name="Login" data-process="Processing..." class="btn btn-purple" name="login_user" type="submit">Login</button>
             </form>
         </div>
     </div>

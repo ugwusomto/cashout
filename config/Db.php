@@ -35,6 +35,20 @@ class Db{
     return $result;
   }
 
+    /**
+   * @desc This method handles any type of update in our app
+   * @param string sql query
+   * @return Boolean true/false
+   */
+  protected static function update($sql){
+    $result = self::getDb()->query($sql);
+    if($result){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   /**
    * @Desc This function fetches a single row from the database ... not minding any table
    * @param string sqlquery

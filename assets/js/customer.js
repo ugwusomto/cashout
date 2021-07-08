@@ -14,6 +14,7 @@ $(document).ready(function(){
 function handleFormSubmission(event){
   event.preventDefault();
   const form = $(this);
+  const formButton = form.find("button[type='submit']");
   const action = form.attr("action");
   const method = form.attr("method");
   const formType = form.data("form");
@@ -22,6 +23,7 @@ function handleFormSubmission(event){
   let formData = form.serializeArray();
   formData.push({name:formType,value:true})
   
+  formButton.attr({disabled:true}).html(formButton.data("process"))
   //ajax Call
   $.ajax({
     method:method,
@@ -30,6 +32,8 @@ function handleFormSubmission(event){
     success:function(response){
       response = JSON.parse(response);
       console.log(response)
+      formButton.attr({ disabled: false }).html(formButton.data("name"));
+
       if(response.errors){
         for (const key in response.errors) {
           messageBox.append($("<p>").text(response.errors[key]).addClass("text-light")) ;
