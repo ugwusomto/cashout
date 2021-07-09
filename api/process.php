@@ -144,3 +144,10 @@ if (!empty($_POST["processDeposit"])) {
 
 
 }
+
+
+
+// This handles investment
+if(!empty($_POST["processInvestment"])){
+    echo json_encode(["success"=>"Investment Successfull","url"=>APP_PATH."customer/home.php"]);
+}

@@ -67,7 +67,9 @@ if(!empty(Transaction::getDataByTxId($txRef))){
       Account::updateRecord($sql);
       // record that transaction
       $type = TRANSACTION_TYPE[0];
-      $sql= "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`status`) VALUES('$user_id','$nairaAmount','$type','$txRef','1')";
+      $tx_status = TRANSACTION_STATUS["sucess"];
+
+      $sql= "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`status`) VALUES('$user_id','$nairaAmount','$type','$txRef','$tx_status')";
       echo 
       Transaction::create($sql);
       $path = APP_PATH."customer/home.php";
@@ -77,10 +79,10 @@ if(!empty(Transaction::getDataByTxId($txRef))){
      }else{
 
       $type = TRANSACTION_TYPE[0];
-      $sql= "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`status`) VALUES('$user_id','$nairaAmount','$type','$txRef','0')";
+      $tx_status = TRANSACTION_STATUS["failed"];
+      $sql= "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`status`) VALUES('$user_id','$nairaAmount','$type','$txRef','$tx_status')";
       echo
       Transaction::create($sql);
-
 
       $path = APP_PATH."customer/home.php";
       header("Location: $path");

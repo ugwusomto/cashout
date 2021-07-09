@@ -65,7 +65,7 @@
                       <input required type="password"  required name="password" minlength="6"  maxlength="10">
                 </label>
                 <div class="single-checkbox-wrap">
-                    <input name="rem" checked required type="checkbox"><span>Remember Me</span>
+                    <input name="rem" checked  type="checkbox"><span>Remember Me</span>
                 </div>
                 <button data-name="Login" data-process="Processing..." class="btn btn-purple" name="login_user" type="submit">Login</button>
             </form>

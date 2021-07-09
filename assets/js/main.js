@@ -33,6 +33,14 @@
                     $('.add-balance-inner-wrap').removeClass('add-balance-inner-wrap-show');
                 }
             });
+                        $(".close_modal_now").on("click", function (event) {
+                                $(".investment_detail").empty();
+
+														$(".add-balance-inner-wrap").removeClass(
+															"add-balance-inner-wrap-show"
+														);
+												});
+
         }
 
         /*------------------------------------------------

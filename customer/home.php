@@ -113,6 +113,10 @@ require_once "../controllers/Account.php";
     <!-- Footer Area -->
 
     <?php require_once "../includes/footer.php"; ?>
+
+
+
+
     <?php require_once "../includes/js.php"; ?>
 
 

@@ -62,6 +62,8 @@ class Account extends Db
         "callback_url"=>$callback,
         "channels"=>["card"]
       ];
+
+      // succ
         $fields_string = http_build_query($fields);
         //open connection
         $ch = curl_init();

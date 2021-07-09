@@ -74,11 +74,18 @@ class User extends Db
      * @param Array usersdata 
      * @return Void 
      */
-    public static function setCookie($data = []){
+    public static function setCookie($data = [],$type = null){
       extract($data);
-      $userArray = json_encode(["email"=>$email,"id"=>$id,"username"=>$username]);
+      if(empty($type)){
+        $userArray = json_encode(["email"=>$email,"id"=>$id,"username"=>$username]);
       // cookie lasts for one week
       setcookie("userdata",$userArray,time()+60*60*24*30,"/");
+      }else{
+      unset($_COOKIE['userdata']);
+      setcookie('userdata', null, -1, '/');
+
+      }
+
 
     }
 }

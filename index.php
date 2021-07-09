@@ -1,5 +1,18 @@
 <?php 
    require_once "config/config.php";
+ require_once "config/Db.php";
+ require_once "controllers/User.php";
+
+
+    $userData = [];
+    //check for existernce of our cookie
+    if (!empty($_COOKIE["userdata"])) {
+        $userData = (array) json_decode($_COOKIE["userdata"]);
+        User::setSession($userData);
+    }
+
+
+
 ?>
 
 <!DOCTYPE html>

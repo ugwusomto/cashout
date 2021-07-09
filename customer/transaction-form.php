@@ -45,34 +45,47 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Invest Now!</h5>
+                        <p class="close_modal_now">
+                            <i style="font-size:20px;" class=" fa fa-close""></i>
+                        </p>
                     </div>
                     <div class="modal-body">
                         <div class="action-sheet-content">
-                            <form action="https://www.s7template.com/tf/bankapp/index.html">
+                            <form data-form="processInvestment" class="investment_form" action="<?=APP_PATH?>api/process.php" method="POST">
+
+                            <div class="messageBox  text-center"></div>
+
                                 <div class="form-group basic">
                                     <div class="input-wrapper">
-                                        <label class="label" for="account1">From</label>
-                                        <select class="form-control custom-select" id="account1">
-                                            <option value="0">Investment (*** 7284)</option>
-                                            <option value="1">Savings (*** 5078)</option>
-                                            <option value="2">Deposit (*** 2349)</option>
+                                        <label class="label" for="account1">Select Plan</label>
+                                 <select data-plan="<?php echo htmlspecialchars(json_encode(INVESTMENT_PLAN));?>"   name="plan_id" class="form-control custom-select investment_plan" id="account1">
+                                           <option value="">Select Plan</option>
+                                           <?php  foreach(INVESTMENT_PLAN as $key => $plan){
+                                            $plan = (object) $plan;    
+                                           ?>
+                                              <option data-id="<?=$key?>" value="<?=$key?>"><?=$plan->name?></option>
+                                           <?php } ?>
                                         </select>
                                     </div>
+                                </div>
+
+
+                                <div class="form-group investment_detail">
                                 </div>
 
                                 <div class="form-group basic">
                                     <label class="label">Enter Amount</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="input1">$</span>
+                                            <span class="input-group-text" id="input1">&#8358;</span>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg" value="768">
+                                        <input type="number" name="amount" required class="form-control form-control-lg" value="">
                                     </div>
                                 </div>
 
                                 <div class="form-group basic">
-                                    <button type="button" class="btn-c btn-primary btn-block btn-lg"
-                                        data-dismiss="modal">Deposit</button>
+                                    <button data-name="Invest" data-process="Processing..." type="submit" class="btn-c btn-primary btn-block btn-lg"
+                                        >Invest</button>
                                 </div>
                             </form>
                         </div>
