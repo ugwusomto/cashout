@@ -29,5 +29,12 @@ class Helper{
     return sha1($data);
   }
 
+  /**
+   * @desc This function generates transaction ref
+   */
+  public static function generateTxRef(){
+    return rand(100, 1000)."ABCD".rand(300, 5000);
+  }
+
 
 }

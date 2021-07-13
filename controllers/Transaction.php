@@ -16,7 +16,7 @@ class Transaction extends Db
      */
     public static function create($sql)
     {
-        $result = self::update($sql);
+        $result = self::insertInto($sql);
         return $result;
     }
 

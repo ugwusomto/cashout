@@ -58,7 +58,7 @@ class Account extends Db
         'email' => $email,
         'amount' => ($amount * 100),
         "currency" => "NGN",
-        "reference"=> rand(100, 1000)."ABCD".rand(300, 5000),
+        "reference"=> Helper::generateTxRef(),
         "callback_url"=>$callback,
         "channels"=>["card"]
       ];

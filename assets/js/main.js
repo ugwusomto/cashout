@@ -7,9 +7,11 @@
         ------------------------------------------------- */
         if ($('.menu-bar').length) {
             $(".menu-bar").on('click', function() {
+                $(".messageBox").removeClass("alert alert-success alert-danger").empty();
                 $(".ba-navbar").toggleClass("ba-navbar-show", "linear");
             });
             $('body').on('click', function(event) {
+                $(".messageBox").removeClass("alert alert-success alert-danger").empty();
                 if (!$(event.target).closest('.menu-bar').length && !$(event.target).closest('.ba-navbar').length) {
                     $('.ba-navbar').removeClass('ba-navbar-show');
                 }
@@ -35,6 +37,7 @@
             });
                         $(".close_modal_now").on("click", function (event) {
                                 $(".investment_detail").empty();
+                $(".messageBox").removeClass("alert alert-success alert-danger").empty();
 
 														$(".add-balance-inner-wrap").removeClass(
 															"add-balance-inner-wrap-show"

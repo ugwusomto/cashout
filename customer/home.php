@@ -80,14 +80,18 @@ require_once "../controllers/Account.php";
 
             <div class="ba-add-balance-inner mg-top-40">
                 <div class="row custom-gutters-20">
-                     <div class="col-md-4 col-sm-12">
+                     <div class="col-md-3 col-sm-12">
                         <a data-form="deposit_form" class="btn btn-green ba-add-balance-btn" href="#">Deposit  <i class="fa fa-plus"></i></i></a>
                     </div>
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-3 col-sm-12">
                         <a data-form="investment_form" class="btn btn-purple ba-add-balance-btn" href="#">Invest <i class="fa fa-credit-card-alt "></i></a>
                     </div>
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-3 col-sm-12">
                         <a data-form="withdrawal_form" class="btn btn-red ba-add-balance-btn" href="#">Withdraw <i class="fa fa-arrow-down"></i></a>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                        <a data-form="add_bank_form" class="btn btn-warning ba-add-balance-btn" href="#">Add Bank <i class="fa fa-arrow-up"></i></a>
                     </div>
                 </div>
             </div>
