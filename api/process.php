@@ -130,54 +130,48 @@ if (!empty($_POST["processDeposit"])) {
     }
 
     if (empty($message["errors"])) {
-
-      $formData["email"] = $_SESSION["customer_email"];
-      $formData["secretKey"] = PAYSTACK_SK;
-      $formData["callback"] = APP_PATH."customer/verify-deposit.php";
-      $result = (object) Account::initializePayment($formData);
-      if($result->status){
-        $message =  ["success"=>$result->message.", You will be redirected in few seconds...","url"=>$result->data->authorization_url];
-      }else{
-        $message["errors"]["failed"] = $result->message;
-      }
-      echo json_encode($message);
-    }else{
-      echo json_encode($message);
-
+        $formData["email"] = $_SESSION["customer_email"];
+        $formData["secretKey"] = PAYSTACK_SK;
+        $formData["callback"] = APP_PATH."customer/verify-deposit.php";
+        $result = (object) Account::initializePayment($formData);
+        if ($result->status) {
+            $message =  ["success"=>$result->message.", You will be redirected in few seconds...","url"=>$result->data->authorization_url];
+        } else {
+            $message["errors"]["failed"] = $result->message;
+        }
+        echo json_encode($message);
+    } else {
+        echo json_encode($message);
     }
-
-
 }
 
 
 
 // This handles investment
-if(!empty($_POST["processInvestment"])){
-
+if (!empty($_POST["processInvestment"])) {
     $message = [];
     $formData = [];
     extract($_POST);
     // check if the person has up to that amount
     $userAccount = (object) Account::getData();
     $investment_plan = (object) INVESTMENT_PLAN[$plan_id];
-    if($amount > $userAccount->balance){
+    if ($amount > $userAccount->balance) {
         $message["errors"]["balance"] = "Sorry you have insufficient balance to perform this investment";
-    }else{
+    } else {
         $formData["amount"] = (float) $amount;
     }
 
     // check if the amount is less than the min
-    if($amount < $investment_plan->min){
-        $message["errors"]["min"] = "Minimum amount is ".html_entity_decode("&#8358;").number_format($investment_plan->min,0,".",",");
+    if ($amount < $investment_plan->min) {
+        $message["errors"]["min"] = "Minimum amount is ".html_entity_decode("&#8358;").number_format($investment_plan->min, 0, ".", ",");
     }
-   // check if the amount is less than the max
+    // check if the amount is less than the max
     if ($amount > $investment_plan->max) {
         $message["errors"]["max"] = "Maximum amount is ".html_entity_decode("&#8358;").number_format($investment_plan->max, 0, ".", ",");
     }
 
 
-    if(empty($message["errors"])){
-
+    if (empty($message["errors"])) {
         $formData["info"] = json_encode(INVESTMENT_PLAN[$plan_id]);
         $formData["tx_id"] = Helper::generateTxRef();
         $formData["type"] = TRANSACTION_TYPE[1];
@@ -189,26 +183,25 @@ if(!empty($_POST["processInvestment"])){
         $__user_id = $_SESSION["customer_id"];
         $sql = "UPDATE `accounts` SET `balance`='$newBalance' WHERE `user_id`='$__user_id'";
         $result =  Account::updateRecord($sql);
-        if($result){
-         extract($formData);
-         // create an investment record in the transaction table'
-         $sql = "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`info`,`status`) VALUES('$user_id','$amount','$type','$tx_id','$info','$status')";
-         $result =  Transaction::create($sql);
-         if($result){
-            $message["success"] = "Investment successfully created";
-            $message["url"] = APP_PATH."customer/home.php";
+        if ($result) {
+            extract($formData);
+            // create an investment record in the transaction table'
+            $sql = "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`info`,`status`) VALUES('$user_id','$amount','$type','$tx_id','$info','$status')";
+            $result =  Transaction::create($sql);
+            if ($result) {
+                $message["success"] = "Investment successfully created";
+                $message["url"] = APP_PATH."customer/home.php";
+                echo json_encode($message);
+            } else {
+                $message["errors"]["insertion"] = "Failed to add investment record";
+                echo json_encode($message);
+            }
+        } else {
+            $message["errors"]["insertion"] = "Failed to updated balance record";
             echo json_encode($message);
-         }else{
-           $message["errors"]["insertion"] = "Failed to add investment record";
-          echo json_encode($message);
-
-         }
-        }else{
-          $message["errors"]["insertion"] = "Failed to updated balance record";
-          echo json_encode($message);
         }
-    }else{
-      echo json_encode($message);
+    } else {
+        echo json_encode($message);
     }
 
 
@@ -217,27 +210,107 @@ if(!empty($_POST["processInvestment"])){
 
 
 // verify bank detain
-if(!empty($_POST["verifyBank"])){
-      extract($_POST);
-      $message = [];
-      $formData = [];
+if (!empty($_POST["verifyBank"])) {
+    extract($_POST);
+    $message = [];
+    $formData = [];
       
-      $formData["account_no"] = $account_no;
-      $formData["bank_code"] = $bank_code;
-      $formData["secretKey"] = PAYSTACK_SK;
+    $formData["account_no"] = $account_no;
+    $formData["bank_code"] = $bank_code;
+    $formData["secretKey"] = PAYSTACK_SK;
 
 
-      $result = Bank::verifyBank($formData);
-      if(!empty($result->status)){
-         echo json_encode(["message"=>"Bank Detail Verified","success"=>true,"name"=>$result->data->account_name]);
-      }else{
+    $result = Bank::verifyBank($formData);
+    if (!empty($result->status)) {
+        echo json_encode(["message"=>"Bank Detail Verified","success"=>true,"name"=>$result->data->account_name]);
+    } else {
         echo json_encode(["error"=>true,"message"=>"Wrong Account Detail"]);
-      }
+    }
 }
 
 
 // add an account detail
-if(!empty($_POST["processBank"])){
-        echo json_encode(["success"=>"Bank Added Successfully"]);
+if (!empty($_POST["processBank"])) {
+    extract($_POST);
+    $message = [];
+    $formData = [];
+    $user_id = $_SESSION["customer_id"];
 
+    // get bank information using bank code
+    $bank_key = array_search($bank_code, array_column(BANKS, 'code'));
+    $bank = (object) BANKS[$bank_key];
+    $bank->name =  strtolower($bank->name);
+    $account_name = strtolower($account_name);
+    //check if this user already added this bank detail before
+    if (empty(Bank::getDataByCodeAndAccount($bank_code, $account_no))) {
+        $sql = "INSERT INTO `banks`(`user_id`,`name`,`account_no`,`account_name`,`code`) VALUES('$user_id','$bank->name','$account_no','$account_name','$bank_code')";
+        $result = Bank::create($sql);
+        if ($result) {
+            $message["success"] = "Bank detail added successfully";
+            $message["url"] = APP_PATH."customer/home.php";
+            echo json_encode($message);
+        } else {
+            $message["errors"]["failed"] = "Sorry something went wrong,please try again";
+            echo json_encode($message);
+        }
+    } else {
+        $message["errors"]["bank_exists"] = "Bank detail already exists";
+        echo json_encode($message);
+    }
+}
+
+
+// this handles the withdrawal request
+if (!empty($_POST["processWithdraw"])) {
+    extract($_POST);
+    $message = [];
+    $formData = [];
+    $user_id = $_SESSION["customer_id"];
+
+    $userAccount =(object) Account::getData();
+
+    //  check if the user selected an account to withdraw from
+    if (empty($bank_account)) {
+        $message["errors"]["bank_account"] = "Please select an account";
+    } else {
+        //  check if user has up to that amount
+        if ($amount > $userAccount->{$bank_account}) {
+            $end_message = ($bank_account == "bonus") ? " bonus balance" : "account balance";
+            $message["errors"]["insufficient"] = "Sorry you have insufficient $end_message";
+        }
+    }
+
+    // check if the user has a bank detail
+    if (empty($account)) {
+        $message["errors"]["bank"] = "Please add a bank info";
+    }
+
+
+    if (empty($message["errors"])) {
+        $amount = (float) $amount;
+        $sql = "UPDATE `accounts` SET `$bank_account`=`$bank_account`-'$amount' WHERE `user_id`='$user_id'";
+        // Helper::see($sql,true);
+        $result = Account::updateRecord($sql);
+        if ($result) {
+            $type =TRANSACTION_TYPE[2];
+            $tx_id = Helper::generateTxRef();
+            $info = json_encode(Bank::getDataById($account));
+            $status = TRANSACTION_STATUS["pending"];
+            $sql = "INSERT INTO `transactions`(`user_id`,`amount`,`type`,`tx_id`,`info`,`status`) VALUES('$user_id','$amount','$type','$tx_id','$info','$status')";
+            $result =  Transaction::create($sql);
+            if ($result) {
+                $message["success"] = "Withdrawal request successfully created";
+                $message["url"] = APP_PATH."customer/home.php";
+                echo json_encode($message);
+            } else {
+                $message["errors"]["failed"] = "Sorry something went wrong,please try again";
+                echo json_encode($message);
+            }
+        } else {
+            $message["errors"]["failed"] = "Sorry failed create a withdrawal request, please try again";
+            echo json_encode($message);
+        }
+    } else {
+        echo json_encode($message);
+    }
 }

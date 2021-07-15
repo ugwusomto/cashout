@@ -36,5 +36,14 @@ class Helper{
     return rand(100, 1000)."ABCD".rand(300, 5000);
   }
 
+  /**
+   * @this function helps us preview data
+   */
+  public static function see($data,$kill = false){
+    echo "<pre>";
+    print_r($data);
+    if($kill){die();}
+  }
+
 
 }

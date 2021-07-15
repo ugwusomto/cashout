@@ -4,6 +4,8 @@ require_once "../config/config.php";
 require_once "../config/Db.php";
 require_once "../controllers/Helper.php";
 require_once "../controllers/Account.php";
+require_once "../controllers/Bank.php";
+
 
 
  
@@ -14,7 +16,8 @@ require_once "../controllers/Account.php";
  }
 
  $account =(object) Account::getData();
-
+ $userBanks = Bank::getAllData();
+//  Helper::see($userBanks);
 
 ?>
 <!DOCTYPE html>
@@ -67,7 +70,7 @@ require_once "../controllers/Account.php";
                         <img src="<?=IMAGE_PATH?>icon/1.png" alt="img">
                     </div>
                     <h5 class="title">Total Balance</h5>
-                    <h5 class="amount">$<?=number_format($account->balance,0,".",",")?></h5>
+                    <h5 class="amount">&#8358;<?=number_format($account->balance,0,".",",")?></h5>
                 </div>
             </div>
         </div>

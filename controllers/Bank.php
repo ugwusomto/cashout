@@ -62,4 +62,50 @@ class Bank extends Db
     }
 
 
+        /**
+     * @desc This function returns user back detail record
+     * @param String $code
+     * @param String $account_no
+     * @return Array user accout
+     */
+    public static function getDataByCodeAndAccount($code,$account_no)
+    {
+        $user_id = $_SESSION["customer_id"];
+        $sql = "SELECT * FROM ".self::$tableName." WHERE  `code`='$code' AND `account_no`='$account_no'";
+        $result = self::fetchOne($sql);
+        return $result;
+    }
+
+
+
+      /**
+     * @desc This function returns user bank detail record
+     * @param Integer  $id
+     * @return Array user accout
+     */
+    public static function getDataById($id)
+    {
+        $user_id = $_SESSION["customer_id"];
+        $sql = "SELECT * FROM ".self::$tableName." WHERE  `id`='$id'";
+        $result = self::fetchOne($sql);
+        return $result;
+    }
+
+        /**
+     * @desc This function returns all user bank detail 
+     * @param Array $data
+     * @return Array user bank detail
+     */
+    public static function getAllData()
+    {
+        $user_id = $_SESSION["customer_id"];
+        $sql = "SELECT * FROM ".self::$tableName." WHERE `user_id`='$user_id' ";
+        $result = self::fetchAll($sql);
+        return $result;
+    }
+
+    
+
+
+
 }

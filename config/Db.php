@@ -79,5 +79,24 @@ class Db{
     }
   }
 
+    /**
+   * @Desc This function fetches all row from the database that matches the query... not minding any table
+   * @param string sqlquery
+   * @return Array data fetched
+   */
+  protected static function fetchAll($sql): array
+  {
+    $result = self::getDb()->query($sql);
+    if($result->num_rows > 0){
+      $rows = [];
+      while($data = $result->fetch_assoc()){
+         $rows[] = $data;
+      }
+      return $rows;
+    }else{
+      return [];
+    }
+  }
+
 
 }

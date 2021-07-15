@@ -177,7 +177,7 @@ function handleInvestmentSubmission(event){
           // redirect to a url if it exists
           if(response.url){
               setTimeout(() => {
-            //  location.href = response.url;
+             location.href = response.url;
           }, 2000);
           }
 
@@ -241,7 +241,7 @@ function handleAddBankSubmission(event){
           // redirect to a url if it exists
           if(response.url){
               setTimeout(() => {
-            //  location.href = response.url;
+             location.href = response.url;
           }, 2000);
           }
 
