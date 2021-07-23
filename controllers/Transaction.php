@@ -35,6 +35,18 @@ class Transaction extends Db
         return $result;
     }
 
+            /**
+     * @desc This function returns all transaction by type detail 
+     * @param Array $data
+     * @return Array user bank detail
+     */
+    public static function getAllDataByType($type)
+    {
+        $user_id = $_SESSION["customer_id"];
+        $sql = "SELECT * FROM ".self::$tableName." WHERE `type`='$type' AND `user_id`='$user_id' ";
+        $result = self::fetchAll($sql);
+        return $result;
+    }
 
     
 }
